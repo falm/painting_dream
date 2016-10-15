@@ -1,5 +1,6 @@
 
 import $ from 'jquery';
+import Config from './config';
 
 function readRecords(fun){
 
@@ -19,17 +20,21 @@ function readRecords(fun){
 
 function draw(records, paintFunc){
     let i = 0;
-    let time = Math.floor(10000/records.length);
+    let time = Math.floor(Config.seconds/records.length);
+
+    console.log(records.length);
+    console.log(time);
     let run_int = setInterval(run, time);
 
     function run() {
         try{
+            console.log(i);
             paintFunc(records[i++])
         }catch(e){
             clearInterval(run_int);
             throw(e);
         }
-        if(records.length <= i){
+        if(records.length <= i || i >= Config.seconds){
             clearInterval(run_int);
         }
     }
@@ -62,6 +67,23 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+
+/**
+ * 获取当前url的参数
+ * @method getQueryString
+ * @param {String}name  url参数名
+ * @returns {String, or , NULL} 返回URL参数值
+ */
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+
+
+
+
 CanvasInit();
 
-export {readRecords, draw, getContext, CanvasInit};
+export {readRecords, draw, getContext, CanvasInit, getQueryString};
