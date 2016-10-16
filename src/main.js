@@ -7,7 +7,8 @@ import './style.css';
 
 import Record from './record';
 
-// import {CanvasInit} from './common';
+import {getQueryString} from './common';
+import Config from './config';
 
 import Circle from './circle';
 import Arc from './arc';
@@ -17,11 +18,15 @@ import Rotate from './rotate';
 import D from './d';
 import Particle from './particle';
 import TriangleStone from './triangle_stone'
+import Organic from './organic'
 
 const GraphList = {
+    // 'circle': [Circle, Arc, Rotate, Particle, Organic],
     'circle': [Circle, Arc, Rotate, Particle],
-    'rectangle' : [rectangle, BrushPainter, D],
-    'triangle': [triangle, TriangleStone]
+    // 'rectangle' : [rectangle, BrushPainter, D],
+    'rectangle' : [BrushPainter, D],
+    // 'triangle': [triangle, TriangleStone]
+    'triangle': [TriangleStone]
 };
 
 
@@ -44,7 +49,7 @@ Painter.draw = (filename, graph, index) => {
 (() => {
 
     if(process.env.NODE_ENV == 'development') {
-        Painter.draw('test_data.json');
+        Painter.draw(Config.testFile, getQueryString('g'), getQueryString('i'));
     }
 
 })();
