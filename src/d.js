@@ -49,10 +49,10 @@ class D{
     }
 
     draw(){
-        this.ctx.translate((this.width-this.offset)/2, - this.offset);
+        // this.ctx.translate((this.width-this.offset)/2, - this.offset);
         _.reduce(this.points, (tx, point) => {
             this.ctx.save();
-            this.ctx.rotate(Math.PI*2/9);
+            // this.ctx.rotate(Math.PI*2/9);
             this.ctx.fillStyle = point.c;
             this.ctx.globalAlpha = 0.5;
             this.ctx.fillRect(point.x, point.y, this.denseness, this.denseness);
