@@ -1,34 +1,56 @@
 
 import {getContext} from './common';
 
+const LEN = 19;
 /**
  * 旋转六边
  */
-function Rotate(records) {
-    let ctx = getContext();
-    let width = ctx.canvas.width;
-    let height = ctx.canvas.height;
-    ctx.translate(width/2, height/2);
-    let len = 19;
-    let step = Math.floor(records.length/3000);
-    let count = 0;
-    for (var i=1;i<len;i++){ // Loop through rings (from inside to out)
-        ctx.save();
 
-        for (var j=0;j<i*len;j++){ // draw individual dots
-            ctx.fillStyle = records[step + count++].color();
-            ctx.rotate(Math.PI*2/(i*6));
-            ctx.beginPath();
-            ctx.arc(0, i*22.5, 10, 0, Math.PI*2, true);
-            ctx.fill();
-        }
+class Rotate {
 
-        ctx.restore();
+    constructor(records){
+        this.records = records;
+        this.ctx = getContext();
+        this.width = this.ctx.canvas.width;
+        this.height = this.ctx.canvas.height;
+        this.ctx.translate(this.width/2, this.height/2);
+        this.step = Math.floor(records.length/3000);
+        this._count = 0;
     }
+
+    draw(){
+        for (var i=1 ; i < LEN ; i++ ) { // Loop through rings (from inside to out)
+            this.ctx.save();
+
+            for (var j=0; j < i * LEN ; j++){ // draw individual dots
+                this.ctx.fillStyle = this.count();
+                this.ctx.rotate(Math.PI*2/(i*6));
+                this.ctx.beginPath();
+                this.ctx.arc(0, i*22.5, 10, 0, Math.PI*2, true);
+                this.ctx.fill();
+            }
+
+            this.ctx.restore();
+        }
+    }
+
+    count(){
+        let i = this.step + this._count++;
+        let color = null;
+        if(i < this.records.length){
+            color = this.records[i].color();
+        }else{
+            this._count = 0;
+            color = this.records[this.step + this._count].color();
+        }
+        return color;
+    }
+
 }
 
 Rotate.run = (records) => {
-    Rotate(records);
+    let rotate = new Rotate(records);
+    rotate.draw();
 };
 
 export default Rotate;
