@@ -10,8 +10,8 @@ class Arc{
         this.record = record;
         this.ctx = getContext();
         this.x = this.ctx.canvas.width / 2 + 50;
-        this.y = this.ctx.canvas.height - 40;
-        this.radius         = _.random(700);                    // 圆弧半径
+        this.y = this.ctx.canvas.height - 50;
+        this.radius         = _.random(750);                    // 圆弧半径
         this.startAngle     = _.random(record.x) ;                     // 开始点
         this.endAngle       = Math.PI * 2 + record.y;
         this.lineWidth = _.random(5, true);
